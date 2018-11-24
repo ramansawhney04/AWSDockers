@@ -1,0 +1,20 @@
+# Docker on ubuntu via ansible
+---
+- hosts: ec2
+  gather_facts: no
+  connection: ssh
+  sudo: yes
+  sudo_user: ubuntu
+  tasks:	
+  - name: update
+    command: sudo apt-get update -y
+  - name: Upgarde
+    command: sudo apt-get upgrade -y
+  - name: Install docker
+    command: sudo apt-get -y install docker.io
+  - name: Creating links
+    command: sudo ln -sf /usr/bin/docker.io /usr/local/bin/docker
+  - name: links 2
+    command: sudo sed -i '$acomplete -F _docker docker' /etc/bash_completion.d/docker
+  - name: service start
+    command: sudo service docker restart  
